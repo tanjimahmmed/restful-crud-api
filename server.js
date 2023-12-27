@@ -1,7 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const Product = require('./model/productModel');
 const app = express();
+
+const PORT = process.env.PORT || 3000;
+const MONGO_URL = process.env.MONGO_URL;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -78,11 +82,11 @@ app.delete('/products/:id', async(req, res)=> {
 });
 
 mongoose.
-connect('mongodb+srv://tanjim1234:tanjim1234@cluster0.gvpv5le.mongodb.net/restfulapi?retryWrites=true&w=majority')
+connect(MONGO_URL)
 .then(() => {
     console.log('connected to mongodb');
-    app.listen(3000, ()=> {
-        console.log(`Node API is running on port 3000`);
+    app.listen(PORT, ()=> {
+        console.log(`Node API is running on port ${PORT}`);
     });
 })
 .catch((error) => {
